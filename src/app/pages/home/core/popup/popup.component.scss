@@ -1,0 +1,113 @@
+.popup-container__result-info {
+    width: 100%;
+    height: auto;
+    &-content {
+        width: 100%;
+        background-color: white;
+        padding: 30px 45px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+    }
+    &-btn-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+    &-img {
+        width: 100%;
+        height: 270px;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    &-description {
+        display: grid;
+        grid-template-columns: 90px auto;
+        grid-template-areas: 'img country' 'img continent';
+        gap: 10px;
+        &-img {
+            grid-area: img;
+        }
+        &-country {
+            grid-area: country;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        &-continent {
+            grid-area: continent;
+        }
+    }
+    &-list {
+        overflow-y: auto;
+        max-height: 120px;
+    }
+}
+
+//utilities
+.image-custom-detail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+}
+
+.image-custom-detail-country {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    vertical-align: bottom;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #673AB7;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    color: #717070;
+    &-detail-country {
+        font-size: 18px;
+    }
+}
+
+.additional-info {
+    display: flex;
+    gap: 8px;
+    margin: 0px;
+}
+
+@media only screen and (max-width:480px) {
+    //data
+    .popup-container__result-info {
+        &-content {
+            padding: 20px 20px;
+            gap: 15px;
+        }
+        &-description {
+            gap: 5px;
+        }
+        &-img {
+            height: 200px;
+        }
+    }
+    //image web format
+    .image-custom-detail-country {
+        height: 50px;
+    }
+    //titles
+    .title {
+        font-size: 16px;
+    }
+    .subtitle {
+        font-size: 16px;
+        &-detail-country {
+            font-size: 16px;
+        }
+    }
+}

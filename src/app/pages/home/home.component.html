@@ -1,0 +1,111 @@
+<section class="home-container">
+    <div class="home-container__search-content">
+        <mat-form-field class="example-full-width">
+            <mat-label>País</mat-label>
+            <input type="text" matInput [formControl]="searchControl" placeholder="Escribe el país que deseas ver" [matMenuTriggerFor]="afterMenu">
+            <mat-icon matSuffix class="home-container__search-content-button" (click)="btnSearch()">search</mat-icon>
+        </mat-form-field>
+    </div>
+    <mat-menu #afterMenu="matMenu" xPosition="after" class="menu-custom" [hasBackdrop]="false" [overlapTrigger]="false">
+        <div (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+            <div class="menu-custom__content">
+                <div class="menu-custom__header">
+                    <h2 class="menu-custom__header-title">Filtrar por continentes</h2>
+                    <h2 class="menu-custom__header-clean" (click)="cleanContinents()">Limpiar</h2>
+                </div>
+                <div class="menu-custom__continents">
+                    @for(continent of continents();track continent.code){
+                    <div class="menu-custom__continents-item" [ngClass]="{'menu-custom__continents-item--selected': validateIsSelectedContent(continent)}" (click)="selectedContinent(continent)">
+                        <div class="menu-custom__continents-img">
+                            <img class="img-menu-continent" [src]="continent.urlImg" alt="">
+                        </div>
+                        <p class="menu-custom__continents-text">{{continent.name}}</p>
+                    </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+    </mat-menu>
+    <div class="home-container__result" #contentmain>
+
+        <div class="home-container__result-content" #gridcards>
+            @if(showLoading()){
+            <div class="content-loading">
+                <mat-spinner></mat-spinner>
+            </div>
+            } @for (item of countries(); track item.code) {
+            <mat-card class="example-card" (click)="isSelectedCountry(item)">
+                <img mat-card-image class="custom-image-web-format" [src]="item.webformatURL" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                    <div class="home-container__result-content-description" [ngClass]="{'home-container__result-content-description--active': item.code==country().code}">
+                        <div class="home-container__result-content-description-img">
+                            <img class="image-custom" [src]="[item.flags.svg]" [alt]="item.flags.alt">
+                        </div>
+                        <div class="home-container__result-content-description-country" [ngClass]="{'home-container__result-content-description-country--active': item.code==country().code}">
+                            {{item.name}}
+                        </div>
+                        <div class="home-container__result-content-description-continent" [ngClass]="{'home-container__result-content-description-continent--active': item.code==country().code}">
+                            {{item.continent.name}}
+                        </div>
+
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            } @if(countries().length==0&&showLoading()==false) {
+            <p>No existe resultados para la búsqueda de : {{searchControl.value}}</p>
+            }
+        </div>
+        @if(showDetail()){
+        <div class="home-container__result-info">
+            <div class="home-container__result-info-content">
+                <button class="home-container__result-info-btn-close" mat-mini-fab color="primary" (click)="closeDetail()">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <div class="home-container__result-info-img">
+                    <img class="image-custom-detail" [src]="country().webformatURL" alt="Image Country">
+                </div>
+
+                <div>
+                    <div class="home-container__result-info-description">
+                        <div class="home-container__result-info-description-img">
+                            <img class="image-custom-detail-country" [src]="[country().flags.svg]" alt="Image Country">
+                        </div>
+                        <div class="home-container__result-info-description-country">
+                            <span class="title">{{country().name}}</span>
+                        </div>
+                        <div class="home-container__result-info-description-continent subtitle subtitle-detail-country">
+                            {{country().continent.name}}
+                        </div>
+
+                    </div>
+                </div>
+                <p class="additional-info"><span class="title">Capital:</span> <span class="subtitle">{{country().capital}}</span></p>
+                <p class="additional-info"><span class="title">Language:</span> @for (item of country().languages; track $index) {
+                    <span class="subtitle">
+                        @if ($index!=0) {
+                        -
+                        }
+                        {{item.name}}</span> }
+                </p>
+                <p class="additional-info"><span class="title">Population:</span> <span class="subtitle">{{50000}}</span></p>
+                <p class="additional-info"><span class="title">Currency:</span> <span class="subtitle">{{country().currencies}}</span></p>
+                <p class="additional-info"><span class="title">Region:</span></p>
+                <div class="home-container__result-info-list">
+                    <mat-list>
+                        @for (item of country().states; track item.name) {
+                        <div>
+                            <mat-list-item>{{item.name}}</mat-list-item>
+                            <mat-divider></mat-divider>
+                        </div>
+                        }
+                    </mat-list>
+                </div>
+            </div>
+
+        </div>
+        }
+
+    </div>
+</section>

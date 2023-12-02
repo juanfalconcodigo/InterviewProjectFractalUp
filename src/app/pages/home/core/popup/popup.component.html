@@ -1,0 +1,47 @@
+<div class="popup-container__result-info">
+    <div class="popup-container__result-info-content">
+        <button class="popup-container__result-info-btn-close" mat-mini-fab color="primary" (click)="closeDetail()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+        <div class="popup-container__result-info-img">
+            <img class="image-custom-detail" [src]="country().webformatURL" alt="Image Country">
+        </div>
+
+        <div>
+            <div class="popup-container__result-info-description">
+                <div class="popup-container__result-info-description-img">
+                    <img class="image-custom-detail-country" [src]="[country().flags.svg]" alt="Image Country">
+                </div>
+                <div class="popup-container__result-info-description-country">
+                    <span class="title">{{country().name}}</span>
+                </div>
+                <div class="popup-container__result-info-description-continent subtitle subtitle-detail-country">
+                    {{country().continent.name}}
+                </div>
+
+            </div>
+        </div>
+        <p class="additional-info"><span class="title">Capital:</span> <span class="subtitle"> {{country().capital}}</span></p>
+        <p class="additional-info"><span class="title">Language:</span> @for (item of country().languages; track $index) {
+            <span class="subtitle"> 
+                    @if ($index!=0) {
+                        -
+                    }
+                     {{item.name}}</span> }
+        </p>
+        <p class="additional-info"><span class="title">Population:</span> <span class="subtitle"> {{50000}}</span></p>
+        <p class="additional-info"><span class="title">Currency:</span> <span class="subtitle"> {{country().currencies}}</span></p>
+        <p class="additional-info"><span class="title">Region:</span></p>
+        <div class="popup-container__result-info-list">
+            <mat-list>
+                @for (item of country().states; track item.name) {
+                <div>
+                    <mat-list-item>{{item.name}}</mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+                }
+            </mat-list>
+        </div>
+    </div>
+
+</div>
